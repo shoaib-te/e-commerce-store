@@ -1,0 +1,99 @@
+/* Enhanced mobile-first styles for phone responsiveness */
+@import "tailwindcss";
+
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* Base for mobile readability */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation; /* Better touch response on mobile */
+}
+
+a.active hr {
+  display: block;
+}
+
+/* Existing mobile active link */
+@media (max-width: 640px) {
+  a.active {
+    color: #fff;
+    background-color: #000;
+  }
+  
+  /* Extra small phone tweaks */
+  html {
+    font-size: 15px;
+  }
+}
+
+/* Hero Section Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 1.2s ease-out forwards;
+}
+
+/* Animation Delays */
+.delay-200 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+/* Smooth parallax transition on scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .bg-fixed {
+    will-change: transform;
+  }
+}
