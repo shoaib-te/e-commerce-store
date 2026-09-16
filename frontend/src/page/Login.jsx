@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { ShopContext } from "../context/Shopcontext";
 import axios from "axios";
@@ -11,38 +11,45 @@ const AuthForm = () => {
     password: "",
     name: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { settoken, token,} = useContext(ShopContext);
+  const { settoken } = useContext(ShopContext);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  // 1. Correct the endpoint logic: isLogin ? login : register
-  const endpoint = isLogin ? "/api/user/login" : "/api/user/register";
-  
-  try {
-    const response = await axios.post(`http://localhost:4000${endpoint}`, formData);
-    
-    if (response.data.success) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    const endpoint = isLogin ? "/api/user/login" : "/api/user/register";
+    const payload = isLogin
+      ? { email: formData.email.trim(), password: formData.password }
+      : {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          password: formData.password,
+        };
+
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post(endpoint, payload);
+
+      if (!response.data.success) {
+        toast.error(response.data.message || "Authentication failed");
+        return;
+      }
+
       settoken(response.data.token);
       localStorage.setItem("token", response.data.token);
-       // 2. Show dynamic success message
       toast.success(isLogin ? "Login successful!" : "Account created!");
       navigate("/");
-    } else {
-      // 3. Handle cases where success is false (e.g., wrong password)
-      toast.error(response.data.message);
+    } catch (error) {
+      const errorMsg = error.response?.data?.message || error.message;
+      toast.error(errorMsg);
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    
-  } catch (error) {
-    // 4. Extract actual error message from server if it exists
-    const errorMsg = error.response?.data?.message || error.message;
-    toast.error(errorMsg);
-  }
-};
+  };
 
 
   return (
@@ -106,14 +113,16 @@ const handleSubmit = async (e) => {
 
           <button
             type="submit"
+            disabled={isSubmitting}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow-md transition-colors duration-300"
           >
-            {isLogin ? "Sign In" : "Sign Up"}
+            {isSubmitting ? "Please wait..." : isLogin ? "Sign In" : "Sign Up"}
           </button>
         </form>
 
         <div className="text-center">
           <button
+            type="button"
             onClick={() => setIsLogin(!isLogin)}
             className="text-sm text-blue-600 hover:underline font-medium"
 
