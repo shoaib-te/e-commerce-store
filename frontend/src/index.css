@@ -1,6 +1,28 @@
 /* Enhanced mobile-first styles for phone responsiveness */
 @import "tailwindcss";
 
+:root {
+  color-scheme: light;
+  --page: #f7f9f7;
+  --surface: #ffffff;
+  --surface-muted: #edf2ee;
+  --text: #19231d;
+  --text-muted: #65736a;
+  --border: #dce5de;
+  --accent: #286a50;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #151c18;
+  --surface: #202a24;
+  --surface-muted: #2a362f;
+  --text: #edf4ef;
+  --text-muted: #aab8ae;
+  --border: #3b4940;
+  --accent: #91d2aa;
+}
+
 
 * {
   box-sizing: border-box;
@@ -13,10 +35,52 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--page);
+  color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   touch-action: manipulation; /* Better touch response on mobile */
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+html[data-theme='dark'] [class~='bg-white'],
+html[data-theme='dark'] [class~='bg-white/80'],
+html[data-theme='dark'] [class~='bg-gray-50'],
+html[data-theme='dark'] [class~='bg-gray-100'] {
+  background-color: var(--surface) !important;
+}
+
+html[data-theme='dark'] [class~='bg-gray-200'] {
+  background-color: var(--surface-muted) !important;
+}
+
+html[data-theme='dark'] [class~='bg-black'] {
+  background-color: var(--accent) !important;
+}
+
+html[data-theme='dark'] [class~='text-black'],
+html[data-theme='dark'] [class~='text-gray-700'],
+html[data-theme='dark'] [class~='text-gray-800'],
+html[data-theme='dark'] [class~='text-gray-900'] {
+  color: var(--text) !important;
+}
+
+html[data-theme='dark'] [class~='text-gray-400'],
+html[data-theme='dark'] [class~='text-gray-500'],
+html[data-theme='dark'] [class~='text-gray-600'] {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme='dark'] [class*='border-gray-'] {
+  border-color: var(--border) !important;
+}
+
+@media (max-width: 640px) {
+  html[data-theme='dark'] a.active {
+    color: #15251b;
+    background-color: var(--accent);
+  }
 }
 
 a.active hr {

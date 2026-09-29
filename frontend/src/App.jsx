@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './page/Home'
 import About from './page/About'
@@ -16,11 +16,21 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ShopContext } from './context/Shopcontext'
 import Verify from './page/Verify'
+import { applyTheme, getInitialTheme } from './theme'
 
 function App() {
   const { token } = useContext(ShopContext)
   const location = useLocation()
   const isLoginPage = location.pathname === '/login'
+  const [theme, setTheme] = useState(getInitialTheme)
+
+  useEffect(() => {
+    applyTheme(theme)
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme((currentTheme) => currentTheme === 'dark' ? 'light' : 'dark')
+  }
 
   return (
     <div className={isLoginPage ? 'min-h-screen' : 'min-h-screen px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'}>
@@ -28,10 +38,10 @@ function App() {
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
-        theme="light"
+        theme={theme}
         style={{ fontSize: '14px' }} // Mobile-friendly toast
       />
-      {!isLoginPage && <Navbar />}
+      {!isLoginPage && <Navbar theme={theme} onToggleTheme={toggleTheme} />}
       {!isLoginPage && <SearchBar />}
       <Routes>
         <Route  path='/' element={<Home />} />

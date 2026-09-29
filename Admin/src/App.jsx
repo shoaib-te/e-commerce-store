@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
-import { Route, Router, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Orders from './pages/Orders'
 import List from './pages/list'
 import Add from './pages/Add'
 import Login from './pages/Login'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
  const [token, setToken] = useState(localStorage.getItem('token') || '');
@@ -19,7 +19,6 @@ useEffect(() => {
 }, [token]); // This runs whenever 'token' changes
 
   
-  const loaction =useLocation()
   return (
     <div className='bg-gray-50 min-h-screen'>
       {

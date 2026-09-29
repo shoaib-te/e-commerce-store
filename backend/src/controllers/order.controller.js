@@ -140,7 +140,7 @@ const verifystripe = async (req, res) => {
 
 
 //
-const placeorderrezorpay = async (req, res) => {};
+const placeorderrezorpay = async (_req, _res) => {};
 // all product in admin panal
 const allorders = async (req, res) => {
   try {

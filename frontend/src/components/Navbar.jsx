@@ -3,9 +3,10 @@ import { assets } from '../assets/assets'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { ShopContext } from '../context/Shopcontext'
 import { toast } from 'react-toastify'
-function Navbar() {
+import ThemeToggle from './ThemeToggle'
+function Navbar({ theme, onToggleTheme }) {
   const [showMenu, setShowMenu] = React.useState(false)
-  const {showserch , setCartitem,settoken,  setshowserch,getCartCount,token } = useContext(ShopContext)
+  const { settoken, setshowserch, getCartCount, token } = useContext(ShopContext)
  const navigate=useNavigate()
 
 const logout =()=>{
@@ -47,6 +48,7 @@ const logout =()=>{
       </ul>
 
       <div className='flex items-center gap-5'>
+        <ThemeToggle theme={theme} onToggle={onToggleTheme} />
         <img onClick={()=>setshowserch(true)} className='w-5 cursor-pointer hover:scale-110 transition-transform' src={assets.search_icon} alt="Search" />
         
         {/* Profile Dropdown with "Hover Bridge" to prevent accidental closing */}

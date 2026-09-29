@@ -2,6 +2,13 @@ import React, { useEffect, useState, useCallback } from 'react' // Added useCall
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets'
+
+const fetchOrders = (token) => axios.post(
+  'http://localhost:4000/api/order/allorders',
+  {},
+  { headers: { token } },
+)
+
 function Orders({ token }) {
   const [orderproduct, setorderproduct] = useState([])
 
@@ -10,14 +17,7 @@ function Orders({ token }) {
     try {
       if (!token) return
 
-      const response = await axios.post(
-        'http://localhost:4000/api/order/allorders',
-        {},
-        { headers: { token } } // Most common backend pattern, or use { Authorization: `Bearer ${token}` }
-      )
-  console.log(response);
-  
-      // Fixed: changed 'responses' to 'response'
+      const response = await fetchOrders(token)
       if (response.data.success) {
         setorderproduct(response.data.orders)
       } else {
@@ -31,20 +31,40 @@ function Orders({ token }) {
 
   const statuehendle=async(orderid,status)=>{
    try {
-    const response =await axios.post('http://localhost:4000/api/order/status',{orderid,status:event.target.value},{
+    const response =await axios.post('http://localhost:4000/api/order/status',{orderid,status},{
       headers:{token}
     })
     console.log(response);
     await handleorder();
    } catch (error) {
     console.log(error);
-    toast.error(response.error.message)
+    toast.error(error.response?.data?.message || error.message)
     
    }
   }
   useEffect(() => {
-    handleorder()
-  }, [handleorder]) // Reliable dependency tracking
+    if (!token) return
+
+    let isActive = true
+    fetchOrders(token)
+      .then((response) => {
+        if (!isActive) return
+        if (response.data.success) {
+          setorderproduct(response.data.orders)
+        } else {
+          toast.error(response.data.message)
+        }
+      })
+      .catch((error) => {
+        if (isActive) {
+          toast.error(error.response?.data?.message || error.message)
+        }
+      })
+
+    return () => {
+      isActive = false
+    }
+  }, [token])
 
  return (
 
@@ -82,7 +102,7 @@ function Orders({ token }) {
 
         <p className='text-sm sm:text-[15px] font-semibold'>${order.amount}</p>
 
-        <select onChange={(event)=>statuehendle(order._id,event)} className='p-2 font-semibold border border-gray-300 outline-none' value={order.status}>
+        <select onChange={(event)=>statuehendle(order._id,event.target.value)} className='p-2 font-semibold border border-gray-300 outline-none' value={order.status}>
           <option value="Order Placed">Order Placed</option>
           <option value="Packing">Packing</option> 
           <option value="Shipped">Shipped</option>
