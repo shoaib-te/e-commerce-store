@@ -32,7 +32,6 @@ const ShopContextProvider = (props) => {
             setProducts(response.data); // 2. Store data in state
             setLoading(false);
         } catch (error) {
-            console.error("Error fetching products:", error);
             setLoading(false);
         }
     };

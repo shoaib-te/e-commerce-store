@@ -10,8 +10,6 @@ const authuser = (req, res, next) => {
       token = authHeader.substring(7); // Extract token after "Bearer "
     }
 
-    console.log("Extracted token:", token ? "present" : "missing");
-
     if (!token) {
       return res
         .status(401)
@@ -19,12 +17,10 @@ const authuser = (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log("Decoded:", decoded);
  ;
     req.user = { id: decoded.id }; // Attach directly to the req object
     next();
   } catch (error) {
-    console.log("Auth error:", error.message);
     res.status(401).json({ success: false, message: error.message });
   }
 };

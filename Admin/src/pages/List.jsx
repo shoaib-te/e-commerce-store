@@ -4,9 +4,6 @@ import { toast } from 'react-toastify';
 
 function List() {
   const [products, setProducts] = React.useState([]);
-  const [images, setImages] = React.useState([]);
- console.log(products);
- console.log(images);
   const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:4000/api/product/list', {
@@ -16,13 +13,11 @@ function List() {
         });
         if (response.data.success) {
           setProducts(response.data.product);
-          setImages(response.data.image);
           toast.success('Products fetched successfully');
         } else {
           toast.error('Failed to fetch products');
         }
-      } catch (error) {
-        console.error('Error fetching products:', error);
+      } catch {
         toast.error('Failed to fetch products');
       }
     };
@@ -40,8 +35,7 @@ function List() {
         } else {
           toast.error('Failed to delete product');
         }
-      } catch (error) {
-        console.error('Error deleting product:', error);
+      } catch {
         toast.error('Failed to delete product');
       }
     };

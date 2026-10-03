@@ -75,8 +75,6 @@ function PlaceOrder() {
             orderData,
             { headers: { token } }, // Most setups use 'token' or 'Authorization'
           );
-          console.log(response);
-          
           if (response.data.success) {
             setCartitem({}); // Clear cart on success
             navigate("/orders");
@@ -92,7 +90,6 @@ function PlaceOrder() {
             orderData,
             { headers: { token } },
           );
-          console.log(stripeResponse);
           if (stripeResponse.data.success){
             const {session_url}=stripeResponse.data
             window.location.replace(session_url)
@@ -107,7 +104,6 @@ function PlaceOrder() {
           break;
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };

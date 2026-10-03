@@ -11,7 +11,6 @@ const Login = ({ setToken }) => {
     
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-        console.log({ email, password });
         try {
             const response = await axios.post(`${BACKEND_URL}/api/user/admin`, {
                 email,
@@ -25,7 +24,6 @@ const Login = ({ setToken }) => {
                 toast.error(response.data.message || 'Login failed');
             }
         } catch (error) {
-            console.error('Login error:', error);
             toast.error(error.response?.data?.message || 'Login failed');
         }
     };

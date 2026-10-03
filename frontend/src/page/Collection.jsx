@@ -17,7 +17,6 @@ function Collection() {
     if (category.includes(e.target.value)) {
       // Remove from array
       setCategory((prev) => {
-        console.log(prev, "prev remove value before update");
         return prev.filter((item) => {
           return item !== e.target.value;
         });
@@ -25,7 +24,6 @@ function Collection() {
     } else {
       // Add to array
       setCategory((prev) => {
-        console.log(prev, "prev add value before update");
         return [...prev, e.target.value];
       });
     }

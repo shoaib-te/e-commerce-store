@@ -38,22 +38,16 @@ const ShopProvider = ({ children }) => {
     // 4. Update the state
     
     if (token) {
-      console.log(token);
-      
-      
       try {
         const response = await axios.post("http://localhost:4000/api/cart/add",{itemId,size},{
           headers:{
             Authorization:`Bearer ${localStorage.getItem("token")}`
           }
         })
-      console.log(response);
       toast.success(response.data.message);
       
       } catch (error) {
-        console.log(error);
-        
-        
+        toast.error(error.message);
       }
       
     }
@@ -97,13 +91,9 @@ const ShopProvider = ({ children }) => {
       let itemInfo = products.find((product) => product._id === itemId);
 
       for (const size in cartitem[itemId]) {
-        try {
-          // 2. Only calculate if quantity is greater than 0 and product exists
-          if (cartitem[itemId][size] > 0 && itemInfo) {
-            totalAmount += itemInfo.price * cartitem[itemId][size];
-          }
-        } catch (error) {
-          console.error("Error calculating item:", error);
+        // 2. Only calculate if quantity is greater than 0 and product exists
+        if (cartitem[itemId][size] > 0 && itemInfo) {
+          totalAmount += itemInfo.price * cartitem[itemId][size];
         }
       }
     }
@@ -136,8 +126,7 @@ const ShopProvider = ({ children }) => {
             toast.error(response.data.message);
             }
         } catch (error) {
-          console.log(error);
-          
+          toast.error(error.message);
         }{
         
       }

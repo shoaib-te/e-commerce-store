@@ -23,8 +23,7 @@ export const isAdmin = (req, res, next) => {
     }
 
     next();
-  } catch (error) {
-    console.error("JWT Verification Error:", error.message);
+  } catch {
     return res.status(401).json({
       success: false,
       message: "Invalid or expired token",

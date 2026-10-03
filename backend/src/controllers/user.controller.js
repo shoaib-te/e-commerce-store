@@ -31,9 +31,8 @@ const loginuser= async(req,res)=>{
             message:'invalid credentials in login'
         })
     }
- } catch (error) {
-     console.log( error);
-    res.send({
+    } catch (error) {
+       res.send({
         success:false,
         message:error.message 
     })
@@ -70,9 +69,8 @@ const registeruser=async (req,res)=>{
         success:true,
         token
     })
-   } catch (error) {
-    console.log( error);
-    res.send({
+    } catch (error) {
+     res.send({
         success:false,
         message:error.message 
     })
@@ -84,8 +82,6 @@ const registeruser=async (req,res)=>{
 const registeradmin = async (req, res) => {
    try {
      const { email, password } = req.body;
-      console.log(email,password);
-      
      if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
        // Sign an object, and don't include the password
        const token = jwt.sign({ role: 'admin' }, process.env.ADMIN_SECRET_KEY, { expiresIn: '1d' });
@@ -100,9 +96,7 @@ const registeradmin = async (req, res) => {
        success: false,
        message: 'Invalid credentials'
      });
-
-   } catch (error) {
-      console.error(error);
+   } catch {
       res.status(500).json({
         success: false,
         message: 'Internal server error'

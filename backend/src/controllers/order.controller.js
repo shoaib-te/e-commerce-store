@@ -10,7 +10,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   maxNetworkRetries: 3,
 });
 if (!process.env.STRIPE_SECRET_KEY) {
-  console.error('STRIPE_SECRET_KEY environment variable is missing. Please set it in your .env file.');
   throw new Error('STRIPE_SECRET_KEY missing');
 }
 
@@ -37,7 +36,6 @@ const placeorder = async (req, res) => {
 
     res.json({ success: true, message: "Order Placed", orders });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -95,7 +93,6 @@ const placeorderstripe = async (req, res) => {
     res.json({ success: true, session_url: session.url });
 
   } catch (error) {
-    console.error("Stripe Session Error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -104,8 +101,6 @@ const verifystripe = async (req, res) => {
   try {
     const userId = req.user.id;
     const { order_id, success } = req.body;
-    console.log(userId ,order_id ,success,"verify line 108");
-    
 
     if (!order_id || success === undefined) {
       return res.status(400).json({ success: false, message: "Missing order_id or success parameter" });
@@ -133,7 +128,6 @@ const verifystripe = async (req, res) => {
       res.json({ success: false, message: "Payment cancelled, order deleted" });
     }
   } catch (error) {
-    console.error("Stripe verification error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -147,7 +141,6 @@ const allorders = async (req, res) => {
     const orders = await orderModel.find({});
     res.json({ success: true, orders });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -158,7 +151,6 @@ const userorders = async (req, res) => {
     const orders = await orderModel.find({ userId });
     res.json({ success: true, orders });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -170,7 +162,6 @@ const orderupdate = async (req, res) => {
     await orderModel.findByIdAndUpdate({ _id: orderid }, { status });
     res.json({ success: true, message: "Order Updated" });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };

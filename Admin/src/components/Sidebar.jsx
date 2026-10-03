@@ -4,7 +4,7 @@ import { assets } from '../assets/assets'
 
 function Sidebar() {
   return (
-    <div className='w-[18%] min-h-screen border-r-1 border-gray-300'>
+    <div className='w-[18%] h-full shrink-0 overflow-y-auto border-r-1 border-gray-300'>
       <div className='flex flex-col gap-4 pt-6 pl-[20%]'>
         
         <NavLink 

@@ -24,6 +24,4 @@ app.get("/", (req, res) => {
 });
  connectCloudinary()
  connectDB();
-app.listen(PORT, () => {
-  console.log(`Server started on port: ${PORT}`);
-});
+app.listen(PORT);

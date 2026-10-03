@@ -3,10 +3,7 @@ import userModel from "../models/user.models.js";
 const addcart = async (req, res) => {
   try {
     const { itemId, size } = req.body;
-   const userId = req.user.id; 
-
-    console.log("Add cart body:", req.body);
-    console.log("User ID:", userId);
+    const userId = req.user.id;
 
     const user = await userModel.findById(userId);
     if (!user) {
@@ -28,15 +25,12 @@ const addcart = async (req, res) => {
     user.markModified("cartData");
     await user.save({ validateBeforeSave: false });
 
-    console.log("Updated cartData:", user.cartData);
-
     res.json({
       success: true,
       message: "Item added to cart",
       cartData: user.cartData
     });
   } catch (error) {
-    console.error("Add cart error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -45,8 +39,6 @@ const updatecart = async (req, res) => {
   try {
     const userId = req.user.id;
     const { itemId, size, quantity } = req.body;
-
-    console.log("Update cart for UserID:", userId);
 
     const user = await userModel.findById(userId);
     if (!user) {
@@ -71,15 +63,12 @@ const updatecart = async (req, res) => {
     user.markModified("cartData");
     await user.save({ validateBeforeSave: false });
 
-    console.log("Updated cartData:", user.cartData);
-
     res.json({
       success: true,
       message: "Cart updated",
       cartData: user.cartData
     });
   } catch (error) {
-    console.error("Update cart error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -87,8 +76,6 @@ const updatecart = async (req, res) => {
 const getUsercart = async (req, res) => {
   try {
     const userId = req.user.id; 
-
-    console.log("Get cart for user:", userId);
 
     const user = await userModel.findById(userId).select("cartData");
     if (!user) {
@@ -100,10 +87,8 @@ const getUsercart = async (req, res) => {
       cartData: user.cartData || {}
     });
   } catch (error) {
-    console.error("Get cart error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
 export { addcart, updatecart, getUsercart };
-

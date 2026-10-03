@@ -48,9 +48,6 @@ const Add = ({token}) => {
 
       // Example API call using axios
       const response = await axios.post('http://localhost:4000/api/product/add', formData, { headers: { token } });
-      console.log( response);
-      
-      console.log("FormData ready to send!");
       if (response.data.success) {
        toast.success("Product added successfully!");
        // Reset form fields after successful submission
@@ -68,9 +65,7 @@ const Add = ({token}) => {
       }else{
         toast.error("Failed to add product. Please try again.");
       }
-
-    } catch (error) {
-      console.error("Error submitting form:", error);
+    } catch {
       toast.error("Failed to add product. Please try again.");
     }
   };

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Title from "../components/Title";
 import { ShopContext } from "../context/Shopcontext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Orders() {
   // Extracting products and currency from your ShopContext
@@ -36,7 +37,7 @@ const handleorder = async () => {
       setorderproduct(allOrdersItem.reverse()); 
     }
   } catch (error) {
-    console.log(error);
+    toast.error(error.response?.data?.message || error.message);
   }
 };
 

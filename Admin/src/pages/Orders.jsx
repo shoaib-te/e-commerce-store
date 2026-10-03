@@ -24,20 +24,17 @@ function Orders({ token }) {
         toast.error(response.data.message)
       }
     } catch (error) {
-      console.error(error)
       toast.error(error.response?.data?.message || error.message)
     }
   }, [token])
 
   const statuehendle=async(orderid,status)=>{
    try {
-    const response =await axios.post('http://localhost:4000/api/order/status',{orderid,status},{
+    await axios.post('http://localhost:4000/api/order/status',{orderid,status},{
       headers:{token}
     })
-    console.log(response);
     await handleorder();
    } catch (error) {
-    console.log(error);
     toast.error(error.response?.data?.message || error.message)
     
    }

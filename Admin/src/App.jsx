@@ -20,7 +20,7 @@ useEffect(() => {
 
   
   return (
-    <div className='bg-gray-50 min-h-screen'>
+    <div className='bg-gray-50 h-dvh overflow-hidden flex flex-col'>
       {
         token===""?<Login setToken={setToken}/>:
         <>
@@ -28,7 +28,7 @@ useEffect(() => {
         
          
        
-      <div className='flex w-full'>
+      <div className='flex w-full flex-1 min-h-0 overflow-hidden'>
         {/* Sidebar usually takes a fixed width */}
       <Sidebar />
       
@@ -36,7 +36,7 @@ useEffect(() => {
         
         {/* Main Content Area */}
         
-        <div className='w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base'>
+        <div className='flex-1 min-w-0 overflow-y-auto mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base'>
           <ToastContainer />
           {/* Routes will go here later */}
           <Routes>

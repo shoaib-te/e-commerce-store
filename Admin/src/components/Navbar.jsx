@@ -5,7 +5,7 @@ import { assets } from '../assets/assets'
 function Navbar({setToken}) {
 
   return (
-    <div className='flex items-center justify-between  font-medium pl-5 pr-5 border-b-2 border-gray-300 py-4'>
+    <div className='flex shrink-0 items-center justify-between  font-medium pl-5 pr-5 border-b-2 border-gray-300 py-4'>
       {/* Logo */}
       <img 
         // onClick={() => navigate('/')} 
